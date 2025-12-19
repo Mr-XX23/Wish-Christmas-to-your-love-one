@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-red: var(--brand-red);
+  --color-brand-green: var(--brand-green);
+  --color-brand-gold: var(--brand-gold);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  
+  --animate-snow: snow 10s linear infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-scale-in: scaleIn 0.3s ease-out;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+:root {
+  /* Light Mode - Elegant Cream & Gold */
+  --background: #fffdf5; /* Warm Cream */
+  --foreground: #4a0404; /* Deep Burgundy Red text */
+  
+  --card: #ffffff;
+  --card-foreground: #4a0404;
+  
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  
+  --primary: #D42426; /* Brand Red */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #F4D35E; /* Brand Gold */
+  --secondary-foreground: #171717;
+  
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  
+  --accent: #15803d; /* Brand Green */
+  --accent-foreground: #ffffff;
+  
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  
+  --border: #cbd5e1;
+  --input: #cbd5e1;
+  --ring: #D42426;
+  
+  --radius: 0.5rem;
+  
+  /* Raw Palette */
+  --brand-red: #D42426;
+  --brand-green: #145c2c;
+  --brand-gold: #F4D35E;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark Mode - Festive Christmas Night */
+    --background: #020617; 
+    --foreground: #ffffff;
+    
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
+    
+    --primary: #D42426;
+    --primary-foreground: #ffffff;
+    
+    --secondary: #F4D35E;
+    --secondary-foreground: #171717;
+    
+    --muted: #e2e8f0;
+    --muted-foreground: #64748b;
+    
+    --accent: #15803d;
+    --accent-foreground: #ffffff;
+    
+    --destructive: #991b1b;
+    --destructive-foreground: #ffffff;
+    
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #D42426;
   }
 }
 
+/* Global Body Styles with Festive Backgrounds */
 body {
-  background: var(--background);
+  /* Soft Winter Sky - Light Blue to White */
+  background: linear-gradient(180deg, #e3f2fd 0%, #f0f4f8 40%, #ffffff 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Darker Winter Night Sky */
+    background: linear-gradient(180deg, #1a2332 0%, #2d3748 40%, #374151 100%);
+  }
+}
+
+:root {
+  /* Overriding base variables for the Ice Theme */
+  --primary: #0ea5e9; /* Sky Blue */
+  --brand-gold: #fbbf24; /* Warm Gold to contrast ice */
+}
+
+@keyframes snow {
+  0% {
+    background-position: 0px 0px, 40px 40px, 80px 20px, 50px 60px;
+  }
+  100% {
+    background-position: 0px 200px, 40px 240px, 80px 220px, 50px 260px;
+  }
 }
