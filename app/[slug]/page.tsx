@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!card) return { title: "Card Not Found" };
 
   return {
-    title: `A Christmas Greeting for ${card.to || 'You'}!`,
-    description: `You've received a magical Christmas card from ${card.from || 'a friend'}. Open it inside!`,
+    title: `${card.from || 'A friend'} send you a surprise message 💌.`,
+    description: `Open it 😄 😄 😄 😄`,
   }
 }
 

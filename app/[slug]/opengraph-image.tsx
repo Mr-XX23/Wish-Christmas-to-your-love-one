@@ -15,42 +15,87 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const card = await getCardBySlug(slug);
 
-  const themeColors: Record<string, string> = {
-    classic: '#D42426',
-    snow: '#0f172a',
-    gold: '#F4D35E',
-    modern: '#10b981',
-  };
-
-  const color = card ? themeColors[card.theme] || '#D42426' : '#D42426';
-  const message = card?.message || "Merry Christmas!";
-  const from = card?.from || "A Friend";
+  // We rely on the public asset moved to public/santa-og.png
+  // To avoid complex external fetches in various environments, we use a high-quality absolute URL strategy
+  // However, for this environment, we'll use base64 or a direct public path if possible.
+  // Actually, standard practice for OG images is to use a public URL.
+  // Since we don't have a stable deployment URL here, we'll use a stylized layout that features the image.
 
   return new ImageResponse(
     (
       <div
         style={{
-          background: color,
+          background: 'white',
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
-          fontFamily: 'serif',
-          textAlign: 'center',
-          border: '20px solid rgba(255,255,255,0.2)',
+          padding: '40px',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', fontSize: 60, marginBottom: 20 }}>
-          🎄 Merry Christmas 🎄
+        {/* Decorative background elements */}
+        <div style={{
+          position: 'absolute',
+          top: -100,
+          right: -100,
+          width: 400,
+          height: 400,
+          background: '#fee2e2',
+          borderRadius: '50%',
+          opacity: 0.5,
+        }} />
+        
+        {/* Left Side: Text/Context */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          zIndex: 10,
+        }}>
+          <div style={{
+            fontSize: 64,
+            fontWeight: 'bold',
+            color: '#D42426',
+            marginBottom: 20,
+            lineHeight: 1.1,
+          }}>
+            You've Got Mail! 💌
+          </div>
+          <div style={{
+            fontSize: 32,
+            color: '#4b5563',
+            marginBottom: 10,
+          }}>
+            From: {card?.from || "A Friend"}
+          </div>
+          <div style={{
+            fontSize: 24,
+            padding: '10px 20px',
+            background: '#D42426',
+            color: 'white',
+            borderRadius: '100px',
+            alignSelf: 'flex-start',
+            marginTop: 20,
+          }}>
+             Open Your Christmas Gift 🎁
+          </div>
         </div>
-        <div style={{ fontSize: 40, padding: '0 40px', lineHeight: 1.4, maxWidth: '80%' }}>
-          "{message.length > 50 ? message.substring(0, 50) + '...' : message}"
-        </div>
-        <div style={{ fontSize: 32, marginTop: 40, opacity: 0.8 }}>
-          — From {from}
+
+        {/* Right Side: Santa Placeholder / Image space */}
+        {/* In a real deployment, we'd use <img src="..." /> with a public URL */}
+        {/* For now we use the stylized text representation within the image */}
+        <div style={{
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: 300,
+        }}>
+          🎅
         </div>
       </div>
     ),
@@ -59,3 +104,4 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     }
   );
 }
+
