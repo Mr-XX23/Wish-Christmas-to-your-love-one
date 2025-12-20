@@ -13,17 +13,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!card) return { title: "Card Not Found" };
 
   return {
-    title: `${card.from || 'A friend'} send you a surprise message 💌.`,
-    description: `Open it 😄 😄 😄 😄`,
+    title: `${card.from || 'A friend'} sent you a surprise message.`,
+    description: `Open your Christmas greeting now!`,
     openGraph: {
-      title: `${card.from || 'A friend'} send you a surprise message 💌.`,
-      description: `Open it 😄 😄 😄 😄`,
+      title: `${card.from || 'A friend'} sent you a surprise message.`,
+      description: `Open your Christmas greeting now!`,
       type: "website",
+      url: `https://wish-christmas-to-your-love-one.vercel.app/${slug}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${card.from || 'A friend'} send you a surprise message 💌.`,
-      description: `Open it 😄 😄 😄 😄`,
+      title: `${card.from || 'A friend'} sent you a surprise message.`,
+      description: `Open your Christmas greeting now!`,
     }
   }
 }

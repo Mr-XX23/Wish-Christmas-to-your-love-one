@@ -1,7 +1,5 @@
 import { ImageResponse } from 'next/og';
 import { getCardBySlug } from '@/lib/db';
-import fs from 'fs';
-import path from 'path';
 
 export const runtime = 'nodejs';
 
@@ -17,15 +15,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const card = await getCardBySlug(slug);
 
-  // Read the santa image from public folder and convert to base64
-  let santaImageBase64 = '';
-  try {
-    const filePath = path.join(process.cwd(), 'public', 'santa-og.png');
-    const fileBuffer = fs.readFileSync(filePath);
-    santaImageBase64 = `data:image/png;base64,${fileBuffer.toString('base64')}`;
-  } catch (err) {
-    console.error('Failed to read santa-og.png:', err);
-  }
+  // Use the absolute URL for the image
+  // Since we are on Vercel, we can use the project URL
+  const siteUrl = "https://wish-christmas-to-your-love-one.vercel.app";
+  const santaImageUrl = `${siteUrl}/santa-og.png`;
 
   return new ImageResponse(
     (
@@ -69,7 +62,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             marginBottom: 20,
             lineHeight: 1.1,
           }}>
-            You've Got Mail! 💌
+            You've Got Mail!
           </div>
           <div style={{
             fontSize: 42,
@@ -88,7 +81,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             marginTop: 40,
             boxShadow: '0 10px 20px rgba(212, 36, 38, 0.2)',
           }}>
-             Open Your Surprise Message 🎁
+             Open Your Surprise Message
           </div>
         </div>
 
@@ -99,16 +92,13 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          {santaImageBase64 ? (
-            <img 
-              src={santaImageBase64} 
-              width="500" 
-              height="500" 
-              style={{ objectFit: 'contain' }}
-            />
-          ) : (
-            <div style={{ fontSize: 300 }}>🎅</div>
-          )}
+          <img 
+            src={santaImageUrl} 
+            width="500" 
+            height="500" 
+            style={{ objectFit: 'contain' }}
+            alt="Santa Claus"
+          />
         </div>
       </div>
     ),
