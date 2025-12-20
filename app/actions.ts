@@ -8,8 +8,8 @@ function generateSlug() {
 }
 
 export async function createCardAction(formData: FormData) {
-    const to = formData.get('to') as string;
-    const from = formData.get('from') as string;
+    const to = formData.get('toName') as string;
+    const from = formData.get('fromName') as string;
     const message = formData.get('message') as string;
     const theme = formData.get('theme') as string;
 
@@ -29,10 +29,5 @@ export async function createCardAction(formData: FormData) {
     };
 
     await saveCard(card);
-
-    // Return the slug so client can redirect or show success
-    // For now, let's redirect on server or return data?
-    // User flow: "Generate unique link... Show share actions".
-    // Better to return the slug to the client so they can show the modal.
     return { success: true, slug };
 }
