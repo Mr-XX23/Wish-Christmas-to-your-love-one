@@ -15,10 +15,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const card = await getCardBySlug(slug);
 
-  // Use the absolute URL for the image
-  // Since we are on Vercel, we can use the project URL
   const siteUrl = "https://wish-christmas-to-your-love-one.vercel.app";
   const santaImageUrl = `${siteUrl}/santa-og.png`;
+  const from = card?.from || "A Friend";
 
   return new ImageResponse(
     (
@@ -30,75 +29,92 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
-          padding: '60px',
+          padding: '0 80px',
+          fontFamily: 'sans-serif',
           position: 'relative',
-          overflow: 'hidden',
         }}
       >
-        {/* Decorative background elements */}
+        {/* Subtle Background Gradient/Vignette */}
         <div style={{
           position: 'absolute',
-          top: -100,
-          right: -100,
-          width: 500,
-          height: 500,
-          background: '#fee2e2',
-          borderRadius: '50%',
-          opacity: 0.6,
+          top: 0,
+          left: 0,
+          width: '400px',
+          height: '100%',
+          background: 'linear-gradient(to right, #f8f9fa, transparent)',
+          opacity: 0.8,
         }} />
-        
-        {/* Left Side: Text/Context */}
+
+        {/* Left Side: Tilted Image in rounded frame */}
+        <div style={{
+          display: 'flex',
+          width: '400px',
+          height: '450px',
+          background: '#f3f4f6',
+          borderRadius: '32px',
+          overflow: 'hidden',
+          transform: 'rotate(-5deg)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
+          border: '8px solid white',
+          marginRight: '60px',
+        }}>
+          <img 
+            src={santaImageUrl} 
+            width="400" 
+            height="450" 
+            style={{ objectFit: 'cover' }}
+            alt="Santa"
+          />
+        </div>
+
+        {/* Right Side: Content */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
-          zIndex: 10,
         }}>
+          {/* Domain Badge */}
           <div style={{
-            fontSize: 72,
-            fontWeight: 'bold',
-            color: '#D42426',
-            marginBottom: 20,
-            lineHeight: 1.1,
-          }}>
-            You've Got Mail!
-          </div>
-          <div style={{
-            fontSize: 42,
-            color: '#4b5563',
-            marginBottom: 20,
-          }}>
-            From: {card?.from || "A Friend"}
-          </div>
-          <div style={{
-            fontSize: 28,
-            padding: '15px 30px',
-            background: '#D42426',
-            color: 'white',
-            borderRadius: '100px',
+            background: '#f3f4f6',
+            padding: '8px 16px',
+            borderRadius: '20px',
+            fontSize: '20px',
+            color: '#6b7280',
             alignSelf: 'flex-start',
-            marginTop: 40,
-            boxShadow: '0 10px 20px rgba(212, 36, 38, 0.2)',
+            marginBottom: '32px',
+            fontWeight: '500',
           }}>
-             Open Your Surprise Message
+            wish-christmas-to-your-love-one.vercel.app
           </div>
-        </div>
 
-        {/* Right Side: Santa Image */}
-        <div style={{
-          display: 'flex',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <img 
-            src={santaImageUrl} 
-            width="500" 
-            height="500" 
-            style={{ objectFit: 'contain' }}
-            alt="Santa Claus"
-          />
+          {/* Main Text */}
+          <div style={{
+            fontSize: '64px',
+            fontWeight: '900',
+            color: '#000000',
+            lineHeight: '1.2',
+            marginBottom: '40px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <span style={{ color: '#D42426' }}>{from}</span>
+            <span>sent you a</span>
+            <span>surprise message.</span>
+          </div>
+
+          {/* Button */}
+          <div style={{
+            background: 'black',
+            color: 'white',
+            padding: '16px 40px',
+            borderRadius: '40px',
+            fontSize: '28px',
+            fontWeight: 'bold',
+            alignSelf: 'flex-start',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+          }}>
+            Open Now
+          </div>
         </div>
       </div>
     ),
