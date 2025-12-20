@@ -1,7 +1,9 @@
 import { ImageResponse } from 'next/og';
 import { getCardBySlug } from '@/lib/db';
+import fs from 'fs';
+import path from 'path';
 
-export const runtime = 'nodejs'; // Use nodejs runtime for fs access in getCardBySlug
+export const runtime = 'nodejs';
 
 export const alt = 'Merry Christmas!';
 export const size = {
@@ -15,11 +17,15 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const card = await getCardBySlug(slug);
 
-  // We rely on the public asset moved to public/santa-og.png
-  // To avoid complex external fetches in various environments, we use a high-quality absolute URL strategy
-  // However, for this environment, we'll use base64 or a direct public path if possible.
-  // Actually, standard practice for OG images is to use a public URL.
-  // Since we don't have a stable deployment URL here, we'll use a stylized layout that features the image.
+  // Read the santa image from public folder and convert to base64
+  let santaImageBase64 = '';
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'santa-og.png');
+    const fileBuffer = fs.readFileSync(filePath);
+    santaImageBase64 = `data:image/png;base64,${fileBuffer.toString('base64')}`;
+  } catch (err) {
+    console.error('Failed to read santa-og.png:', err);
+  }
 
   return new ImageResponse(
     (
@@ -32,7 +38,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '40px',
+          padding: '60px',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -42,11 +48,11 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           position: 'absolute',
           top: -100,
           right: -100,
-          width: 400,
-          height: 400,
+          width: 500,
+          height: 500,
           background: '#fee2e2',
           borderRadius: '50%',
-          opacity: 0.5,
+          opacity: 0.6,
         }} />
         
         {/* Left Side: Text/Context */}
@@ -57,7 +63,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           zIndex: 10,
         }}>
           <div style={{
-            fontSize: 64,
+            fontSize: 72,
             fontWeight: 'bold',
             color: '#D42426',
             marginBottom: 20,
@@ -66,36 +72,43 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             You've Got Mail! 💌
           </div>
           <div style={{
-            fontSize: 32,
+            fontSize: 42,
             color: '#4b5563',
-            marginBottom: 10,
+            marginBottom: 20,
           }}>
             From: {card?.from || "A Friend"}
           </div>
           <div style={{
-            fontSize: 24,
-            padding: '10px 20px',
+            fontSize: 28,
+            padding: '15px 30px',
             background: '#D42426',
             color: 'white',
             borderRadius: '100px',
             alignSelf: 'flex-start',
-            marginTop: 20,
+            marginTop: 40,
+            boxShadow: '0 10px 20px rgba(212, 36, 38, 0.2)',
           }}>
-             Open Your Christmas Gift 🎁
+             Open Your Surprise Message 🎁
           </div>
         </div>
 
-        {/* Right Side: Santa Placeholder / Image space */}
-        {/* In a real deployment, we'd use <img src="..." /> with a public URL */}
-        {/* For now we use the stylized text representation within the image */}
+        {/* Right Side: Santa Image */}
         <div style={{
           display: 'flex',
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          fontSize: 300,
         }}>
-          🎅
+          {santaImageBase64 ? (
+            <img 
+              src={santaImageBase64} 
+              width="500" 
+              height="500" 
+              style={{ objectFit: 'contain' }}
+            />
+          ) : (
+            <div style={{ fontSize: 300 }}>🎅</div>
+          )}
         </div>
       </div>
     ),

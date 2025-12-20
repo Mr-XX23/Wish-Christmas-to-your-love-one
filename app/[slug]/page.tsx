@@ -15,6 +15,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${card.from || 'A friend'} send you a surprise message 💌.`,
     description: `Open it 😄 😄 😄 😄`,
+    openGraph: {
+      title: `${card.from || 'A friend'} send you a surprise message 💌.`,
+      description: `Open it 😄 😄 😄 😄`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${card.from || 'A friend'} send you a surprise message 💌.`,
+      description: `Open it 😄 😄 😄 😄`,
+    }
   }
 }
 

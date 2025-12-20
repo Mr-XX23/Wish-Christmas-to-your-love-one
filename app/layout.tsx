@@ -18,6 +18,7 @@ import { PageTransition } from "@/components/ui/page-transition";
 import { HangingOrnaments } from "@/components/ui/ornaments";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://wish-christmas-to-your-love-one.vercel.app"),
   title: "Merry Christmas & Happy New Year",
   description: "Share a magical animated greeting card with your friends and family.",
 };
