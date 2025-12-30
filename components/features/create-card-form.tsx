@@ -44,6 +44,8 @@ export function CreateCardForm({ mode = 'christmas' }: { mode?: 'christmas' | 'n
 
   const shareUrl = generatedSlug ? `${window.location.origin}/${generatedSlug}` : '';
 
+  const isNewYear = mode === 'new-year';
+
   if (generatedSlug) {
     return (
       <motion.div
@@ -51,22 +53,22 @@ export function CreateCardForm({ mode = 'christmas' }: { mode?: 'christmas' | 'n
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-xl mx-auto"
       >
-        <Card className="border-4 border-red-500 shadow-[0_20px_60px_rgba(220,38,38,0.3)] bg-white dark:bg-slate-50 backdrop-blur-sm">
-          <CardHeader className="text-center bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-100 dark:to-pink-100 py-4">
-            <div className="mx-auto bg-amber-500 p-4 rounded-full w-fit mb-3">
-              <Sparkles className="h-8 w-8 text-white" />
+        <Card className={isNewYear ? "border-4 border-amber-500 shadow-[0_20px_60px_rgba(245,158,11,0.3)] bg-slate-950 backdrop-blur-sm" : "border-4 border-red-500 shadow-[0_20px_60px_rgba(220,38,38,0.3)] bg-white dark:bg-slate-50 backdrop-blur-sm"}>
+          <CardHeader className={isNewYear ? "text-center bg-gradient-to-r from-slate-900 to-indigo-950 py-4 border-b border-amber-500/20" : "text-center bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-100 dark:to-pink-100 py-4"}>
+            <div className={isNewYear ? "mx-auto bg-amber-500/20 p-4 rounded-full w-fit mb-3 border border-amber-500/50" : "mx-auto bg-amber-500 p-4 rounded-full w-fit mb-3"}>
+              <Sparkles className={isNewYear ? "h-8 w-8 text-amber-400" : "h-8 w-8 text-white"} />
             </div>
-            <CardTitle className="text-2xl font-serif text-red-700">Card Ready!</CardTitle>
-            <CardDescription className="text-slate-700 dark:text-slate-800 text-sm">Your festive greeting has been created.</CardDescription>
+            <CardTitle className={isNewYear ? "text-2xl font-serif text-amber-500" : "text-2xl font-serif text-red-700"}>Card Ready!</CardTitle>
+            <CardDescription className={isNewYear ? "text-indigo-200 text-sm" : "text-slate-700 dark:text-slate-800 text-sm"}>Your festive greeting has been created.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3 pt-4 pb-4">
-            <div className="p-3 bg-white border-2 border-slate-300 rounded-md break-all text-center font-mono text-sm text-slate-900">
+            <div className={isNewYear ? "p-3 bg-white/5 border-2 border-indigo-500/30 rounded-md break-all text-center font-mono text-sm text-indigo-300" : "p-3 bg-white border-2 border-slate-300 rounded-md break-all text-center font-mono text-sm text-slate-900"}>
               {shareUrl}
             </div>
             <div className="grid grid-cols-2 gap-3">
               <Button
                 onClick={handleCopy}
-                className="w-full border-2 border-slate-400 bg-white hover:bg-slate-400 text-slate-900 hover:text-white font-semibold transition-all shadow-sm"
+                className={isNewYear ? "w-full border-2 border-indigo-500/30 bg-white/5 hover:bg-white/10 text-indigo-200 hover:text-white font-semibold transition-all shadow-sm" : "w-full border-2 border-slate-400 bg-white hover:bg-slate-400 text-slate-900 hover:text-white font-semibold transition-all shadow-sm"}
               >
                 <Copy className="mr-2 h-4 w-4" /> {copied ? 'Copied!' : 'Copy'}
               </Button>
@@ -79,7 +81,7 @@ export function CreateCardForm({ mode = 'christmas' }: { mode?: 'christmas' | 'n
             </div>
           </CardContent>
           <CardFooter className="pt-2">
-            <Button variant="ghost" className="w-full text-slate-700 hover:text-white hover:bg-slate-400 font-medium" onClick={() => setGeneratedSlug(null)}>Create Another</Button>
+            <Button variant="ghost" className={isNewYear ? "w-full text-indigo-300 hover:text-white hover:bg-white/5 font-medium" : "w-full text-slate-700 hover:text-white hover:bg-slate-400 font-medium"} onClick={() => setGeneratedSlug(null)}>Create Another</Button>
           </CardFooter>
         </Card>
       </motion.div>
@@ -87,59 +89,65 @@ export function CreateCardForm({ mode = 'christmas' }: { mode?: 'christmas' | 'n
   }
 
   return (
-    <Card className="w-full max-w-xl mx-auto border-4 border-red-500 shadow-[0_20px_60px_rgba(220,38,38,0.3)] bg-white dark:bg-slate-50 backdrop-blur-sm">
-      <CardHeader className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-100 dark:to-pink-100 py-4">
-        <CardTitle className="text-xl font-serif text-center text-red-700">Send a Holiday Wish</CardTitle>
-        <CardDescription className="text-center text-slate-700 dark:text-slate-800 text-sm">Create a uniquely animated card for your friends.</CardDescription>
+    <Card className={isNewYear ? "w-full max-w-xl mx-auto border-4 border-amber-500/50 shadow-[0_20px_60px_rgba(245,158,11,0.2)] bg-slate-950/80 backdrop-blur-md" : "w-full max-w-xl mx-auto border-4 border-red-500 shadow-[0_20px_60px_rgba(220,38,38,0.3)] bg-white dark:bg-slate-50 backdrop-blur-sm"}>
+      <CardHeader className={isNewYear ? "bg-gradient-to-r from-slate-900 to-indigo-950 py-4 border-b border-amber-500/20" : "bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-100 dark:to-pink-100 py-4"}>
+        <CardTitle className={isNewYear ? "text-xl font-serif text-center text-amber-500" : "text-xl font-serif text-center text-red-700"}>Send a New Year Wish</CardTitle>
+        <CardDescription className={isNewYear ? "text-center text-indigo-200/80 text-sm" : "text-center text-slate-700 dark:text-slate-800 text-sm"}>Create a uniquely animated card for your friends.</CardDescription>
       </CardHeader>
       <CardContent className="pt-3 pb-3">
         <form onSubmit={handleSubmit} className="space-y-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="toName" className="block text-sm font-semibold mb-2 text-slate-800">Friend's Name</label>
+              <label htmlFor="toName" className={isNewYear ? "block text-sm font-semibold mb-2 text-indigo-100" : "block text-sm font-semibold mb-2 text-slate-800"}>Friend's Name</label>
               <Input
                 id="toName"
                 name="toName"
                 placeholder="Friend's Name"
                 required
-                className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
+                className={isNewYear ? "bg-slate-900/60 border-2 border-indigo-400/50 text-white placeholder:text-indigo-200/70 focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50" : "bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"}
               />
             </div>
             <div>
-              <label htmlFor="fromName" className="block text-sm font-semibold mb-2 text-slate-800">Your Name</label>
+              <label htmlFor="fromName" className={isNewYear ? "block text-sm font-semibold mb-2 text-indigo-100" : "block text-sm font-semibold mb-2 text-slate-800"}>Your Name</label>
               <Input
                 id="fromName"
                 name="fromName"
                 placeholder="Your Name"
                 required
-                className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
+                className={isNewYear ? "bg-slate-900/60 border-2 border-indigo-400/50 text-white placeholder:text-indigo-200/70 focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50" : "bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"}
               />
             </div>
           </div>
           <div className="space-y-2">
             <div>
-              <label htmlFor="message" className="block text-sm font-semibold mb-2 text-slate-800">Your Message</label>
+              <label htmlFor="message" className={isNewYear ? "block text-sm font-semibold mb-2 text-indigo-100" : "block text-sm font-semibold mb-2 text-slate-800"}>Your Message</label>
               <textarea
                 id="message"
                 name="message"
-                placeholder="Wishing you joy, peace, and love this holiday season!"
+                placeholder="Wishing you a year fully loaded with happiness!"
                 rows={2}
                 maxLength={280}
                 required
-                className="w-full px-3 py-2 bg-white border-2 border-slate-300 rounded-md text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                className={isNewYear ? "w-full px-3 py-2 bg-slate-900/60 border-2 border-indigo-400/50 rounded-md text-white placeholder:text-indigo-200/70 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 text-sm" : "w-full px-3 py-2 bg-white border-2 border-slate-300 rounded-md text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"}
               />
-              <p className="text-xs text-slate-600 mt-1 text-right">Max 280 chars</p>
+              <p className={isNewYear ? "text-xs text-indigo-300 mt-1 text-right" : "text-xs text-slate-600 mt-1 text-right"}>Max 280 chars</p>
             </div>
           </div>
 
           <div className="space-y-2">
             <div>
-              <label className="block text-sm font-semibold mb-4 text-slate-800">Choose a Theme</label>
-              <ThemePicker currentTheme={theme} onThemeSelect={setTheme} themes={currentThemes} />
+              <label className={isNewYear ? "block text-sm font-semibold mb-4 text-indigo-100" : "block text-sm font-semibold mb-4 text-slate-800"}>Choose a Theme</label>
+              <ThemePicker
+                currentTheme={theme}
+                onThemeSelect={setTheme}
+                themes={currentThemes}
+                labelClassName={isNewYear ? "text-indigo-200" : "text-slate-700"}
+                activeItemClassName={isNewYear ? "ring-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.5)] border-transparent" : "ring-red-500 border-transparent"}
+              />
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white text-base font-bold h-11 shadow-lg hover:shadow-xl transition-all mt-2" disabled={loading}>
+          <Button type="submit" size="lg" className={isNewYear ? "w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white text-base font-bold h-11 shadow-lg hover:shadow-xl transition-all mt-2 border border-yellow-400/50" : "w-full bg-red-600 hover:bg-red-700 text-white text-base font-bold h-11 shadow-lg hover:shadow-xl transition-all mt-2"} disabled={loading}>
             {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Wrapping Gift...</> : <><Sparkles className="mr-2 h-5 w-5" /> Generate Magic Link</>}
           </Button>
         </form>

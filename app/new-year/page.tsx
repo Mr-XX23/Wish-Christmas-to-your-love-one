@@ -3,7 +3,7 @@ import { Fireworks } from "@/components/ui/fireworks";
 
 export default function NewYearPage() {
     return (
-        <main className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 selection:bg-indigo-300 selection:text-indigo-900 bg-slate-900">
+        <main className="min-h-screen md:h-screen sticky top-0 overflow-hidden flex flex-col items-center justify-center p-4 selection:bg-indigo-300 selection:text-indigo-900 bg-slate-900">
 
             {/* Fireworks Background */}
             <Fireworks className="opacity-60" />

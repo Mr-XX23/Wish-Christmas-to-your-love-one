@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 
-export function Fireworks({ className }: { className?: string }) {
+export function Fireworks({ className, trailColor = 'rgba(0, 0, 0, 0.1)' }: { className?: string, trailColor?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -69,16 +69,16 @@ export function Fireworks({ className }: { className?: string }) {
             const colors = ['#ff0', '#f0f', '#0ff', '#ff4', '#4ff'];
             const color = colors[Math.floor(Math.random() * colors.length)];
 
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 100; i++) {
                 particles.push(new Particle(x, y, color));
             }
         };
 
         const loop = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // trails
+            ctx.fillStyle = trailColor; // trails
             ctx.fillRect(0, 0, width, height);
 
-            if (Math.random() < 0.05) {
+            if (Math.random() < 0.15) {
                 createFirework();
             }
 
