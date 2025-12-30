@@ -60,13 +60,7 @@ export function LandingHero() {
                         <Wand2 className="mr-2 w-5 h-5" />
                         Start Creating
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="h-14 px-8 rounded-full border-white/20 hover:bg-white/10 text-white text-lg font-medium backdrop-blur-sm transition-all"
-                    >
-                        View Showcase
-                    </Button>
+
                 </motion.div>
             </motion.div>
 
