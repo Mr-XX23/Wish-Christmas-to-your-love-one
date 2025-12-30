@@ -9,6 +9,9 @@ import { CardData } from "@/lib/db"
 import { themes } from "@/lib/themes"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { ChristmasLights, ChristmasTree } from "@/components/ui/decorations"
+import { MovingClouds } from "@/components/ui/moving-clouds"
+import { Fireworks } from "@/components/ui/fireworks"
 
 interface CardViewerProps {
   card: CardData
@@ -17,6 +20,7 @@ interface CardViewerProps {
 export function CardViewer({ card }: CardViewerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const theme = themes.find(t => t.id === card.theme) || themes[0]
+  const isNewYear = card.theme.startsWith("newyear_")
 
   // Auto-play music on mount
   useEffect(() => {
@@ -34,7 +38,7 @@ export function CardViewer({ card }: CardViewerProps) {
 
     const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min
 
-    const interval: any = setInterval(function() {
+    const interval: any = setInterval(function () {
       const timeLeft = animationEnd - Date.now()
 
       if (timeLeft <= 0) {
@@ -50,27 +54,22 @@ export function CardViewer({ card }: CardViewerProps) {
   return (
     <div className="relative w-full h-screen flex items-center justify-center p-4 overflow-hidden">
       {/* Background with theme */}
+      {/* Background with theme */}
       <div className={cn("absolute inset-0 transition-colors duration-1000", isOpen ? theme.background : "bg-zinc-900")}>
-        {/* Animated particles/snow */}
         {isOpen && (
-          <div className="absolute inset-0 pointer-events-none">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-white/30 rounded-full"
-                initial={{ x: Math.random() * window.innerWidth, y: -20 }}
-                animate={{ 
-                  y: window.innerHeight + 20,
-                  x: Math.random() * window.innerWidth 
-                }}
-                transition={{
-                  duration: 5 + Math.random() * 5,
-                  repeat: Infinity,
-                  delay: Math.random() * 5
-                }}
-              />
-            ))}
-          </div>
+          isNewYear ? (
+            <>
+              <Fireworks className="opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-transparent pointer-events-none" />
+            </>
+          ) : (
+            <>
+              <MovingClouds />
+              <ChristmasLights />
+              {/* Snowfall */}
+              <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_20%_30%,_white_2px,_transparent_2px),radial-gradient(circle_at_60%_70%,_white_2px,_transparent_2px),radial-gradient(circle_at_80%_10%,_white_1.5px,_transparent_1.5px),radial-gradient(circle_at_40%_50%,_white_1px,_transparent_1px)] bg-[length:80px_80px] animate-[snow_20s_linear_infinite]" />
+            </>
+          )
         )}
       </div>
 
@@ -85,11 +84,11 @@ export function CardViewer({ card }: CardViewerProps) {
             onClick={handleOpen}
           >
             <motion.div
-              animate={{ 
+              animate={{
                 y: [0, -20, 0],
                 rotate: [0, 5, -5, 0]
               }}
-              transition={{ 
+              transition={{
                 duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
@@ -135,7 +134,7 @@ export function CardViewer({ card }: CardViewerProps) {
                   {[...Array(3)].map((_, i) => (
                     <motion.div
                       key={i}
-                      animate={{ 
+                      animate={{
                         y: [0, -10, 0],
                         scale: [1, 1.2, 1]
                       }}
@@ -151,9 +150,9 @@ export function CardViewer({ card }: CardViewerProps) {
                 </div>
 
                 <h1 className={cn("text-4xl md:text-5xl font-serif leading-tight", theme.foreground)}>
-                  Merry Christmas, {card.to || "Friend"}!
+                  {isNewYear ? "Happy New Year 2026," : "Merry Christmas,"} {card.to || "Friend"}!
                 </h1>
-                
+
                 <div className="w-24 h-1 bg-white/30 mx-auto rounded-full" />
 
                 <p className={cn("text-lg md:text-xl leading-relaxed whitespace-pre-wrap max-w-xl mx-auto", theme.foreground)}>
@@ -181,15 +180,27 @@ export function CardViewer({ card }: CardViewerProps) {
       {/* Footer */}
       <footer className="absolute bottom-4 left-0 right-0 text-center text-sm font-medium z-20">
         <span className="text-slate-800 dark:text-white/80">Made with ❤️ by{" "}</span>
-        <a 
-          href="https://github.com/Mr-XX23" 
-          target="_blank" 
+        <a
+          href="https://github.com/Mr-XX23"
+          target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-700 dark:text-amber-400 dark:hover:text-amber-300 font-semibold underline"
         >
           Rohan Balami
         </a>
-        <span className="text-slate-800 dark:text-white/80">{" "}• Say thank you! 🎄</span>
+        <span className="text-slate-800 dark:text-white/80">{" "}• Say thank you! {isNewYear ? "🎉" : "🎄"}</span>
+
+        {/* Footer Decorations for Christmas */}
+        {isOpen && !isNewYear && (
+          <>
+            <div className="absolute bottom-4 left-4 opacity-50 transform -scale-x-100 pointer-events-none hidden md:block">
+              <ChristmasTree className="w-24 h-32" />
+            </div>
+            <div className="absolute bottom-4 right-4 opacity-50 pointer-events-none hidden md:block">
+              <ChristmasTree className="w-24 h-32" />
+            </div>
+          </>
+        )}
       </footer>
     </div>
   )

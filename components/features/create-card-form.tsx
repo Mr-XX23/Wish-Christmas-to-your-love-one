@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemePicker } from '@/components/features/theme-picker';
+import { christmasThemes, newYearThemes } from '@/lib/themes';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,8 +10,9 @@ import { createCardAction } from '@/app/actions';
 import { Sparkles, Copy, Share2, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export function CreateCardForm() {
-  const [theme, setTheme] = useState('classic');
+export function CreateCardForm({ mode = 'christmas' }: { mode?: 'christmas' | 'new-year' }) {
+  const currentThemes = mode === 'new-year' ? newYearThemes : christmasThemes;
+  const [theme, setTheme] = useState(currentThemes[0].id);
   const [loading, setLoading] = useState(false);
   const [generatedSlug, setGeneratedSlug] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -18,10 +20,10 @@ export function CreateCardForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    
+
     const formData = new FormData(event.currentTarget);
     formData.append('theme', theme);
-    
+
     try {
       const result = await createCardAction(formData);
       if (result.success) {
@@ -44,7 +46,7 @@ export function CreateCardForm() {
 
   if (generatedSlug) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-xl mx-auto"
@@ -59,17 +61,17 @@ export function CreateCardForm() {
           </CardHeader>
           <CardContent className="space-y-3 pt-4 pb-4">
             <div className="p-3 bg-white border-2 border-slate-300 rounded-md break-all text-center font-mono text-sm text-slate-900">
-               {shareUrl}
+              {shareUrl}
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Button 
+              <Button
                 onClick={handleCopy}
                 className="w-full border-2 border-slate-400 bg-white hover:bg-slate-400 text-slate-900 hover:text-white font-semibold transition-all shadow-sm"
               >
                 <Copy className="mr-2 h-4 w-4" /> {copied ? 'Copied!' : 'Copy'}
               </Button>
-              <Button 
-                onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank')} 
+              <Button
+                onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank')}
                 className="w-full bg-green-600 text-white hover:bg-green-700 hover:shadow-lg font-semibold transition-all shadow-sm"
               >
                 <Share2 className="mr-2 h-4 w-4" /> WhatsApp
@@ -77,7 +79,7 @@ export function CreateCardForm() {
             </div>
           </CardContent>
           <CardFooter className="pt-2">
-             <Button variant="ghost" className="w-full text-slate-700 hover:text-white hover:bg-slate-400 font-medium" onClick={() => setGeneratedSlug(null)}>Create Another</Button>
+            <Button variant="ghost" className="w-full text-slate-700 hover:text-white hover:bg-slate-400 font-medium" onClick={() => setGeneratedSlug(null)}>Create Another</Button>
           </CardFooter>
         </Card>
       </motion.div>
@@ -92,28 +94,28 @@ export function CreateCardForm() {
       </CardHeader>
       <CardContent className="pt-3 pb-3">
         <form onSubmit={handleSubmit} className="space-y-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="toName" className="block text-sm font-semibold mb-2 text-slate-800">Friend's Name</label>
-                <Input
-                  id="toName"
-                  name="toName"
-                  placeholder="Friend's Name"
-                  required
-                  className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="fromName" className="block text-sm font-semibold mb-2 text-slate-800">Your Name</label>
-                <Input
-                  id="fromName"
-                  name="fromName"
-                  placeholder="Your Name"
-                  required
-                  className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
-                />
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="toName" className="block text-sm font-semibold mb-2 text-slate-800">Friend's Name</label>
+              <Input
+                id="toName"
+                name="toName"
+                placeholder="Friend's Name"
+                required
+                className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
+              />
             </div>
+            <div>
+              <label htmlFor="fromName" className="block text-sm font-semibold mb-2 text-slate-800">Your Name</label>
+              <Input
+                id="fromName"
+                name="fromName"
+                placeholder="Your Name"
+                required
+                className="bg-white border-2 border-slate-300 text-slate-900 placeholder:text-slate-500"
+              />
+            </div>
+          </div>
           <div className="space-y-2">
             <div>
               <label htmlFor="message" className="block text-sm font-semibold mb-2 text-slate-800">Your Message</label>
@@ -133,7 +135,7 @@ export function CreateCardForm() {
           <div className="space-y-2">
             <div>
               <label className="block text-sm font-semibold mb-4 text-slate-800">Choose a Theme</label>
-              <ThemePicker currentTheme={theme} onThemeSelect={setTheme} />
+              <ThemePicker currentTheme={theme} onThemeSelect={setTheme} themes={currentThemes} />
             </div>
           </div>
 

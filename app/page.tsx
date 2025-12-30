@@ -1,57 +1,48 @@
-import { CreateCardForm } from "@/components/features/create-card-form";
-import { ChristmasLights, ChristmasTree } from "@/components/ui/decorations";
-import { MovingClouds } from "@/components/ui/moving-clouds";
+import Link from "next/link";
+import { Sparkles, Snowflake } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center p-4 selection:bg-red-200 selection:text-red-900">
-      
-      {/* Moving Clouds */}
-      <MovingClouds />
-      
-      {/* Colorful Christmas Lights */}
-      <ChristmasLights />
-      
-      {/* Enhanced snowfall effect */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_20%_30%,_white_2px,_transparent_2px),radial-gradient(circle_at_60%_70%,_white_2px,_transparent_2px),radial-gradient(circle_at_80%_10%,_white_1.5px,_transparent_1.5px),radial-gradient(circle_at_40%_50%,_white_1px,_transparent_1px)] bg-[length:80px_80px] animate-[snow_20s_linear_infinite]" />
-      
-      <div className="z-10 w-full max-w-4xl space-y-2 relative">
-        <div className="text-center space-y-2 py-2">
-          <h1 
-            dir="ltr" 
-            style={{ transform: 'none', unicodeBidi: 'normal', direction: 'ltr' }}
-            className="text-4xl md:text-7xl font-bold font-serif text-red-700 dark:text-red-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.2)] tracking-tight leading-none"
-          >
-            Merry <span className="text-amber-600 dark:text-amber-400">Christmas</span>
-          </h1>
-          <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto font-medium drop-shadow-sm">
-            🎄 Create magical holiday greetings 🎁
-          </p>
-        </div>
+    <main className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
 
-        <CreateCardForm />
-      </div>
+      {/* Background Gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-slate-900 to-indigo-900/20" />
 
-      {/* Decorative Trees */}
-      <div className="absolute bottom-0 left-[-50px] opacity-30 md:opacity-60 md:left-10 transform -scale-x-100 pointer-events-none">
-        <ChristmasTree className="w-40 md:w-64" />
-      </div>
-      <div className="absolute bottom-0 right-[-50px] opacity-30 md:opacity-60 md:right-10 pointer-events-none">
-         <ChristmasTree className="w-40 md:w-64" />
-      </div>
+      <div className="z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
 
-      <footer className="relative z-10 mt-12 text-sm text-slate-600/70 dark:text-slate-400/70 font-medium text-center w-full pb-16 md:pb-4">
-        Made with ❤️ by{" "}
-        <a 
-          href="https://github.com/Mr-XX23" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-blue-400 hover:text-red-700 font-semibold underline"
-        >
-          Rohan Balami
-        </a>
-        {" "}• Say thank you! 🎄
-      </footer>
+        {/* Christmas Option */}
+        <Link href="/christmas" className="group">
+          <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden border-2 border-white/10 hover:border-red-500/50 transition-all duration-500 bg-gradient-to-br from-red-950/50 to-slate-900/50 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(220,38,38,0.3)]">
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544967082-d9d3fdd1367d?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="bg-red-600/20 p-4 rounded-full w-fit mx-auto backdrop-blur-md border border-red-500/30">
+                <Snowflake className="w-12 h-12 text-red-200" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white drop-shadow-lg">Christmas</h2>
+              <p className="text-red-200 font-medium text-lg">Send festive holiday greetings</p>
+            </div>
+          </div>
+        </Link>
+
+        {/* New Year Option */}
+        <Link href="/new-year" className="group">
+          <div className="relative h-64 md:h-96 rounded-3xl overflow-hidden border-2 border-white/10 hover:border-amber-500/50 transition-all duration-500 bg-gradient-to-br from-indigo-950/50 to-slate-900/50 backdrop-blur-sm flex flex-col items-center justify-center text-center p-8 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(251,191,36,0.3)]">
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500" />
+
+            <div className="relative z-10 space-y-4">
+              <div className="bg-amber-600/20 p-4 rounded-full w-fit mx-auto backdrop-blur-md border border-amber-500/30">
+                <Sparkles className="w-12 h-12 text-amber-200" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-white drop-shadow-lg">New Year 2026</h2>
+              <p className="text-indigo-200 font-medium text-lg">Celebrate the new beginning</p>
+            </div>
+          </div>
+        </Link>
+
+      </div>
     </main>
   );
 }

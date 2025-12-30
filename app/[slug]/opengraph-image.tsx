@@ -19,11 +19,16 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const santaImageUrl = `${siteUrl}/santa-og.png`;
   const from = card?.from || "A Friend";
 
+  const isNewYear = card?.theme?.startsWith("newyear_");
+  const greeting = isNewYear ? "Happy New Year" : "Merry Christmas";
+  const year = isNewYear ? "2026" : "";
+  const highlightColor = isNewYear ? "#FBBF24" : "#D42426"; // Amber vs Red
+
   return new ImageResponse(
     (
       <div
         style={{
-          background: 'white',
+          background: isNewYear ? '#0f172a' : 'white',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -41,30 +46,36 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           left: 0,
           width: '400px',
           height: '100%',
-          background: 'linear-gradient(to right, #f8f9fa, transparent)',
+          background: isNewYear ? 'linear-gradient(to right, #1e1b4b, transparent)' : 'linear-gradient(to right, #f8f9fa, transparent)',
           opacity: 0.8,
         }} />
 
-        {/* Left Side: Tilted Image in rounded frame */}
+        {/* Left Side: Image or Graphic */}
         <div style={{
           display: 'flex',
           width: '400px',
           height: '450px',
-          background: '#f3f4f6',
+          background: isNewYear ? '#1e1b4b' : '#f3f4f6',
           borderRadius: '32px',
           overflow: 'hidden',
           transform: 'rotate(-5deg)',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
           border: '8px solid white',
           marginRight: '60px',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
-          <img 
-            src={santaImageUrl} 
-            width="400" 
-            height="450" 
-            style={{ objectFit: 'cover' }}
-            alt="Santa"
-          />
+          {isNewYear ? (
+            <div style={{ fontSize: '100px', fontWeight: 'bold', color: '#FBBF24' }}>2026</div>
+          ) : (
+            <img
+              src={santaImageUrl}
+              width="400"
+              height="450"
+              style={{ objectFit: 'cover' }}
+              alt="Santa"
+            />
+          )}
         </div>
 
         {/* Right Side: Content */}
@@ -75,11 +86,11 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         }}>
           {/* Domain Badge */}
           <div style={{
-            background: '#f3f4f6',
+            background: isNewYear ? 'rgba(255,255,255,0.1)' : '#f3f4f6',
             padding: '8px 16px',
             borderRadius: '20px',
             fontSize: '20px',
-            color: '#6b7280',
+            color: isNewYear ? '#94a3b8' : '#6b7280',
             alignSelf: 'flex-start',
             marginBottom: '32px',
             fontWeight: '500',
@@ -91,21 +102,21 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           <div style={{
             fontSize: '64px',
             fontWeight: '900',
-            color: '#000000',
+            color: isNewYear ? '#f8fafc' : '#000000',
             lineHeight: '1.2',
             marginBottom: '40px',
             display: 'flex',
             flexDirection: 'column',
           }}>
-            <span style={{ color: '#D42426' }}>{from}</span>
+            <span style={{ color: highlightColor }}>{from}</span>
             <span>sent you a</span>
-            <span>surprise message.</span>
+            <span>{greeting}!</span>
           </div>
 
           {/* Button */}
           <div style={{
-            background: 'black',
-            color: 'white',
+            background: isNewYear ? '#FBBF24' : 'black',
+            color: isNewYear ? 'black' : 'white',
             padding: '16px 40px',
             borderRadius: '40px',
             fontSize: '28px',

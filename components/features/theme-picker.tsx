@@ -3,15 +3,15 @@
 import * as React from "react"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { themes } from "@/lib/themes"
 import { Card } from "@/components/ui/card"
 
 interface ThemePickerProps {
   currentTheme: string
   onThemeSelect: (themeId: string) => void
+  themes: { id: string, name: string, background: string, border: string, color?: string }[]
 }
 
-export function ThemePicker({ currentTheme, onThemeSelect }: ThemePickerProps) {
+export function ThemePicker({ currentTheme, onThemeSelect, themes }: ThemePickerProps) {
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {themes.map((theme) => {

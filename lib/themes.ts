@@ -8,7 +8,8 @@ export type Theme = {
     border: string
 }
 
-export const themes: Theme[] = [
+
+export const christmasThemes: Theme[] = [
     {
         id: "classic",
         name: "Classic",
@@ -46,3 +47,35 @@ export const themes: Theme[] = [
         border: "border-emerald-400"
     }
 ]
+
+export const newYearThemes: Theme[] = [
+    {
+        id: "newyear_sparkle",
+        name: "Midnight Sparkle",
+        color: "#1e1b4b", // indigo-950
+        background: "bg-indigo-950",
+        foreground: "text-indigo-50",
+        accent: "bg-amber-400",
+        border: "border-amber-400"
+    },
+    {
+        id: "newyear_gold",
+        name: "Gatsby Gold",
+        color: "#000000",
+        background: "bg-black",
+        foreground: "text-amber-100",
+        accent: "bg-yellow-500",
+        border: "border-yellow-600"
+    },
+    {
+        id: "newyear_neon",
+        name: "Neon Party",
+        color: "#2e0249", // deep purple
+        background: "bg-purple-900",
+        foreground: "text-fuchsia-100",
+        accent: "bg-fuchsia-500",
+        border: "border-fuchsia-500"
+    }
+]
+
+export const themes: Theme[] = [...christmasThemes, ...newYearThemes]
