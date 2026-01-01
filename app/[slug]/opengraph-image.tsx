@@ -15,7 +15,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const card = await getCardBySlug(slug);
 
-  const siteUrl = "https://wish-christmas-to-your-love-one.vercel.app";
+  const siteUrl = "https://send-wish-to-your-love-one.vercel.app";
   const santaImageUrl = `${siteUrl}/santa-og.png`;
   const from = card?.from || "A Friend";
 

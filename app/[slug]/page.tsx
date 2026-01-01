@@ -28,10 +28,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       type: "website",
-      url: `https://wish-christmas-to-your-love-one.vercel.app/${slug}`,
+      url: `https://send-wish-to-your-love-one.vercel.app/${slug}`,
       images: [
         {
-          url: `https://wish-christmas-to-your-love-one.vercel.app/${slug}/opengraph-image`,
+          url: `https://send-wish-to-your-love-one.vercel.app/${slug}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: isNewYear ? "Happy New Year 2026!" : "Merry Christmas!",
